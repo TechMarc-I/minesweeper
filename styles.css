@@ -1,0 +1,22 @@
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#board
+{
+  display: flex;
+  flex-wrap: wrap;
+
+  max-width: 320px;
+}
+.cell
+{
+  background-color: red;
+  width: 30px;
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
