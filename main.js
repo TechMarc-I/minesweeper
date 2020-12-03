@@ -4,6 +4,7 @@ let boardContainer = document.querySelector("#board");
 let cellCount = numRows*numColumns;
 
 let bombIndex = [];
+let checkedCells = [];
 
 //Function to generate Mine locations
 const generateMines = function() {
@@ -29,11 +30,11 @@ const generateMines = function() {
 
     //If currentCell now contains a bomb, push cellID to bomb index
     if (currentCell.textContent === "bomb") {
-      bombIndex.push(currentCell);
+      bombIndex.push(currentCell.id);
     }
 
     //If bombs still remain when the all cells have run through, run through all cells again until no bombs left
-    if (cellIndex == 100 && bombs !== 0) {
+    if (cellIndex == 100 && mines !== 0) {
       cellIndex = 0;
     };
 
@@ -42,6 +43,18 @@ const generateMines = function() {
   //Display bombIndex in console.
   console.log(bombIndex);
 
+}
+
+const isAMine = function(a)
+{
+  for (i = 0; i < bombIndex.length; i++)
+  {
+    if (a == bombIndex[i])
+    {
+      return true;
+    }
+  }
+  return false;
 }
 
 //Function to Create Grid
@@ -57,48 +70,68 @@ const generateGrid = function(){
 
     board.appendChild(cell);
   }
+  generateMines();
 }
 
 const clicked = function(a)//cell a was clicked!
 {
+  //let id = a;
+  //let cell = document.querySelector("" + id);
   let isAtEdgeTop = false;
   let isAtEdgeRigth = false;
   let isAtEdgeBottom = false;
   let isAtEdgeLeft = false;
   let numNearMines = 0;
 
-  if (isABomb(a))
+  if(checkedCells.includes(a))//did we check that cell aready?
   {
-    //get blasted into the next dimension
+    console.log("Goof, you already clicked that");
+    return;
+  }
+  else {
+    console.log("first time");
+    checkedCells.push(a);
   }
 
-  if (a <= numCulumn)//if we are in the top row
+  if (isAMine(a))
+  {
+    //get blasted into the next dimension
+    console.log("get blasted into the next dimension");
+  }
+
+  if (a <= numColumns)//if we are in the top row
   {
     isAtEdgeTop = true;
+    console.log("were on top");
   }
 
   if (a % numColumns == 0)// remainder of cell id divided by number of columns equals 0 when on right edge
   {
     isAtRightEdge = true;
+    console.log("were on right");
   }
 
   if (a > (cellCount-numColumns))//right side calculates last possible cell not in the last row, if our cell comes after, then it's in the last row
   {
     isAtEdgeBottom = true;
+    console.log("were on bottom");
   }
 
   if (a % numColumns == 1)// remainder of cell id divided by number of columns equals 1 when on left edge
   {
     isAtEdgeLeft = true;
+    console.log("were on left");
   }
 
   //now that we have an idea of where the cell is, we can check surrounding cells
 
   if (!isAtEdgeTop)
   {
+    console.log("hey");
     //check the cell directly above cell a, only if we are not on the top row
     if (isAMine(a-numColumns))
     {
+      console.log("we did a thing");
       numNearMines++;
     }
   }
@@ -161,11 +194,12 @@ const clicked = function(a)//cell a was clicked!
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
+  console.log(numNearMines);
   if (numNearMines > 0)
   {
     //show the number of mines close to this cell
   }
-  else//the 8 cells surrounding this one also dont contain mines
+  else if (false) //I've disabled this for now
   {
     //call this function recursivly for each of the 8 surrounding mines
     if (!isAtEdgeTop)
@@ -211,24 +245,7 @@ const clicked = function(a)//cell a was clicked!
     }
   }
 
-
-
-
-
-
-
 }
 
-const isAMine = function(a)
-{
-  for (i = 0; i < bombIndex.length; i++)
-  {
-    if (a == bombIndex[i])
-    {
-      return true;
-    }
-  }
-  return false;
-}
 
 generateGrid();
