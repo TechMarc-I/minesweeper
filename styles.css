@@ -4,19 +4,44 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/*Game Window*/
+#gameWindow 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #DCDCDC;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*Header*/
+#header 
+{
+  height: 40px;
+  width: 360px;
+  border: 4px inset #BEBEBE;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/*Grid Board*/
 #board
 {
   display: flex;
   flex-wrap: wrap;
-
-  max-width: 320px;
+  justify-content: center;
+  max-width: 360px;
+  margin-bottom: 20px;
+  border: 4px inset #BEBEBE
 }
+
 .cell
 {
-  background-color: red;
-  width: 30px;
-  height: 30px;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  
+  width: 35px;
+  height: 35px;
+  border: 4px outset #BEBEBE;
 }
