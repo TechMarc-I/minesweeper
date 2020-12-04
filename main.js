@@ -73,70 +73,92 @@ const generateGrid = function(){
   generateMines();
 }
 
+const blerg = function()
+{
+
+}
+
+const revealOtherMines = function()
+{
+  for (i = 0; i < bombIndex.length; i++)
+  {
+    document.getElementById(bombIndex[i]).style.backgroundColor = 'red';
+  }
+}
+
 const clicked = function(a)//cell a was clicked!
 {
   //let id = a;
-  //let cell = document.querySelector("" + id);
-  let isAtEdgeTop = false;
-  let isAtEdgeRigth = false;
-  let isAtEdgeBottom = false;
-  let isAtEdgeLeft = false;
-  let numNearMines = 0;
+  let cell = document.getElementById(a);
+  var isAtEdgeTop = false;
+  var isAtEdgeRight = false;
+  var isAtEdgeBottom = false;
+  var isAtEdgeLeft = false;
+  var numNearMines = 0;
+  console.log("checking " + a);
+
 
   if(checkedCells.includes(a))//did we check that cell aready?
   {
-    console.log("Goof, you already clicked that");
+    console.log("This cell was already checked");
     return;
   }
-  else {
-    console.log("first time");
+  else
+  {
+    console.log("This is the first time we clicked this cell");
     checkedCells.push(a);
+    cell.style.backgroundColor = 'green';
   }
 
   if (isAMine(a))
   {
     //get blasted into the next dimension
+    cell.style.backgroundColor = 'red';
     console.log("get blasted into the next dimension");
+    revealOtherMines();
+    return;
+
   }
 
   if (a <= numColumns)//if we are in the top row
   {
     isAtEdgeTop = true;
-    console.log("were on top");
+    console.log(a + "is on top");
   }
 
   if (a % numColumns == 0)// remainder of cell id divided by number of columns equals 0 when on right edge
   {
-    isAtRightEdge = true;
-    console.log("were on right");
+    isAtEdgeRight = true;
+    console.log(a + "is on right");
+    //console.log("variable is" + isAtRightEdge);
   }
 
   if (a > (cellCount-numColumns))//right side calculates last possible cell not in the last row, if our cell comes after, then it's in the last row
   {
     isAtEdgeBottom = true;
-    console.log("were on bottom");
+    console.log(a + "is on bottom");
   }
 
   if (a % numColumns == 1)// remainder of cell id divided by number of columns equals 1 when on left edge
   {
     isAtEdgeLeft = true;
-    console.log("were on left");
+    console.log(a + "is on left");
   }
 
   //now that we have an idea of where the cell is, we can check surrounding cells
 
   if (!isAtEdgeTop)
   {
-    console.log("hey");
+    //console.log("hey");
     //check the cell directly above cell a, only if we are not on the top row
     if (isAMine(a-numColumns))
     {
-      console.log("we did a thing");
+      //console.log("we did a thing");
       numNearMines++;
     }
   }
 
-  if (!isAtEdgeTop && !isAtEdgeRigth)
+  if (!isAtEdgeTop && !isAtEdgeRight)
   {
     if (isAMine(a-numColumns+1))//cell up one and right one
     {
@@ -144,7 +166,7 @@ const clicked = function(a)//cell a was clicked!
     }
   }
 
-  if (!isAtEdgeRigth)
+  if (!isAtEdgeRight)
   {
     if (isAMine(a+1))//cell right one
     {
@@ -152,7 +174,7 @@ const clicked = function(a)//cell a was clicked!
     }
   }
 
-  if (!isAtEdgeRigth && !isAtEdgeBottom)
+  if (!isAtEdgeRight && !isAtEdgeBottom)
   {
     if (isAMine(a+numColumns+1))//cell right one and down one
     {
@@ -194,53 +216,72 @@ const clicked = function(a)//cell a was clicked!
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
+  cell.textContent = numNearMines;
   console.log(numNearMines);
   if (numNearMines > 0)
   {
     //show the number of mines close to this cell
   }
-  else if (false) //I've disabled this for now
+  else if (numNearMines == 0) //I've disabled this for now
   {
+    console.log("gonna look at other stuff now");
     //call this function recursivly for each of the 8 surrounding mines
     if (!isAtEdgeTop)
     {
-
+      console.log(a + " is checking pos 1 now");
       clicked(a-numColumns);
-
     }
 
-    if (!isAtEdgeTop && !isAtEdgeRigth)
+    if (!isAtEdgeTop && !isAtEdgeRight)
     {
-      clicked(a-numColumns+1);
+
+      console.log(a + " is checking pos 2 now");
+      clicked((a-numColumns)+1);
     }
 
-    if (!isAtEdgeRigth)
+    if (!isAtEdgeRight)
     {
+
+      console.log(a + " is checking pos 3 now");
       clicked(a+1);
     }
 
-    if (!isAtEdgeRigth && !isAtEdgeBottom)
+
+    if (!isAtEdgeRight && !isAtEdgeBottom)
     {
+
+      console.log(a + " is checking pos 4 now");
       clicked(a+numColumns+1);
     }
 
+
     if (!isAtEdgeBottom)
     {
+
+      console.log(a + " is checking pos 5 now");
       clicked(a+numColumns);
     }
 
+
     if (!isAtEdgeLeft && !isAtEdgeBottom)
     {
+
+      console.log(a + " is checking pos 6 now");
       clicked(a+numColumns-1);
     }
 
+
     if (!isAtEdgeLeft)
     {
+
+      console.log(a + " is checking pos 7 now");
       clicked(a-1);
     }
 
     if (!isAtEdgeTop && !isAtEdgeLeft)
     {
+
+      console.log(a + " is checking pos 8 now");
       clicked(a-numColumns-1);
     }
   }
