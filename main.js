@@ -58,20 +58,7 @@ const isAMine = function(a)
 }
 
 //Function to Create Grid
-const generateGrid = function(){
-  let cellId = 0;
 
-  while (cellId < cellCount)
-  {
-    cellId += 1;
-    let cell = document.createElement('div');
-    cell.className = "cell";
-    cell.id = cellId;//id of cell
-
-    board.appendChild(cell);
-  }
-  generateMines();
-}
 
 const blerg = function()
 {
@@ -86,9 +73,9 @@ const revealOtherMines = function()
   }
 }
 
-const clicked = function(a)//cell a was clicked!
+const clicked = function(cellNumber)//cell a was clicked!
 {
-  //let id = a;
+  let a = parseInt(cellNumber,10);
   let cell = document.getElementById(a);
   var isAtEdgeTop = false;
   var isAtEdgeRight = false;
@@ -286,6 +273,31 @@ const clicked = function(a)//cell a was clicked!
     }
   }
 
+}
+const generateGrid = function(){
+  let cellId = 0;
+
+  while (cellId < cellCount)
+  {
+    cellId += 1;
+    let cell = document.createElement('div');
+    cell.className = "cell";
+    cell.id = cellId;//id of cell
+
+
+    board.appendChild(cell);
+
+  }
+
+  cellId = 0;
+  while (cellId < cellCount)
+  {
+    cellId++;
+    let theCell = document.getElementById(cellId);
+    theCell.addEventListener("click",function() {clicked(theCell.id)});
+  }
+
+  generateMines();
 }
 
 
