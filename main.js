@@ -13,7 +13,7 @@ let checkedCells = [];//so we can't click on a cell twice
 
 //Function to generate Mine locations
 const generateMines = function() {
-  
+
   //Variable for starting cell
   let cellIndex = 0;
 
@@ -63,20 +63,7 @@ const isAMine = function(a)
 }
 
 //Function to Create Grid
-const generateGrid = function(){
-  let cellId = 0;
 
-  while (cellId < cellCount)
-  {
-    cellId += 1;
-    let cell = document.createElement('div');
-    cell.className = "cell";
-    cell.id = cellId;//id of cell
-
-    board.appendChild(cell);
-  }
-  generateMines();
-}
 
 const revealOtherMines = function()//happens when you accidently click a mine
 {
@@ -86,10 +73,10 @@ const revealOtherMines = function()//happens when you accidently click a mine
   }
 }
 
-
-const clicked = function(a)//cell a was clicked!
+const clicked = function(cellNumber)//cell a was clicked!
 {
-  let cell = document.getElementById(a);//keeps track of cell a
+  let a = parseInt(cellNumber,10);
+  let cell = document.getElementById(a);
   var isAtEdgeTop = false;
   var isAtEdgeRight = false;
   var isAtEdgeBottom = false;
@@ -222,7 +209,7 @@ const clicked = function(a)//cell a was clicked!
   {
     //show the number of mines close to this cell
   }
-  else if (numNearMines == 0)//if each if the surrounding eight cells don't contain a mine, then they're safe to click on right? Lets save some time for the user and click those cell for them, losing almost no time! 
+  else if (numNearMines == 0)//if each if the surrounding eight cells don't contain a mine, then they're safe to click on right? Lets save some time for the user and click those cell for them, losing almost no time!
   {
     console.log("gonna look at other stuff now");
     //call this function recursivly for each of the 8 surrounding mines
@@ -287,7 +274,31 @@ const clicked = function(a)//cell a was clicked!
   }
 
 }
+const generateGrid = function(){
+  let cellId = 0;
+
+  while (cellId < cellCount)
+  {
+    cellId += 1;
+    let cell = document.createElement('div');
+    cell.className = "cell";
+    cell.id = cellId;//id of cell
+
+
+    board.appendChild(cell);
+
+  }
+
+  cellId = 0;
+  while (cellId < cellCount)
+  {
+    cellId++;
+    let theCell = document.getElementById(cellId);
+    theCell.addEventListener("click",function() {clicked(theCell.id)});
+  }
+
+  generateMines();
+}
 
 
 generateGrid();
-
