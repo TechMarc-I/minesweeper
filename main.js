@@ -8,11 +8,12 @@ let mines = 10;
 let flags = mines
 
 let bombIndex = [];
-let checkedCells = [];
+
+let checkedCells = [];//so we can't click on a cell twice
 
 //Function to generate Mine locations
 const generateMines = function() {
-  
+
   //Variable for starting cell
   let cellIndex = 0;
 
@@ -48,11 +49,12 @@ const generateMines = function() {
 
 }
 
+//checked in clicked function
 const isAMine = function(a)
 {
-  for (i = 0; i < bombIndex.length; i++)
+  for (i = 0; i < bombIndex.length; i++)//iterates through bomb index
   {
-    if (a == bombIndex[i])
+    if (a == bombIndex[i])//if exists in bomb index
     {
       return true;
     }
@@ -61,43 +63,19 @@ const isAMine = function(a)
 }
 
 //Function to Create Grid
-const generateGrid = function(){
-  let cellId = 0;
 
-  while (cellId < cellCount)
-  {
-    cellId += 1;
-    let cell = document.createElement('div');
-    cell.className = "cell";
-    cell.id = cellId;//id of cell
 
-    board.appendChild(cell);
-  }
-  generateMines();
-}
-
-//Build Flag Counter
-const flagCounter = function() {
-  let flagContainer = document.querySelector('#flagCounter')
-  flagContainer.textContent = flags;
-}
-
-const blerg = function()
+const revealOtherMines = function()//happens when you accidently click a mine
 {
-
-}
-
-const revealOtherMines = function()
-{
-  for (i = 0; i < bombIndex.length; i++)
+  for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
   {
-    document.getElementById(bombIndex[i]).style.backgroundColor = 'red';
+    document.getElementById(bombIndex[i]).style.backgroundColor = 'red';//turns all mines red
   }
 }
 
-const clicked = function(a)//cell a was clicked!
+const clicked = function(cellNumber)//cell a was clicked!
 {
-  //let id = a;
+  let a = parseInt(cellNumber,10);
   let cell = document.getElementById(a);
   var isAtEdgeTop = false;
   var isAtEdgeRight = false;
@@ -110,13 +88,13 @@ const clicked = function(a)//cell a was clicked!
   if(checkedCells.includes(a))//did we check that cell aready?
   {
     console.log("This cell was already checked");
-    return;
+    return;//we will be stuck in an infinite loop if we don't do this
   }
   else
   {
     console.log("This is the first time we clicked this cell");
-    checkedCells.push(a);
-    cell.style.backgroundColor = 'green';
+    checkedCells.push(a);//make sure we don't check this cell again
+    cell.style.backgroundColor = 'green';//turn the cell green for now
   }
 
   if (isAMine(a))
@@ -126,23 +104,22 @@ const clicked = function(a)//cell a was clicked!
     console.log("get blasted into the next dimension");
     revealOtherMines();
     return;
-
   }
 
-  if (a <= numColumns)//if we are in the top row
+  if (a <= numColumns)//if a is less that numColumns(default is 10)
   {
-    isAtEdgeTop = true;
+    isAtEdgeTop = true;//then we are in the top row
     console.log(a + "is on top");
   }
 
-  if (a % numColumns == 0)// remainder of cell id divided by number of columns equals 0 when on right edge
+  if (a % numColumns == 0)//remainder of a divided by number of columns equals 0 when on right edge
   {
     isAtEdgeRight = true;
     console.log(a + "is on right");
     //console.log("variable is" + isAtRightEdge);
   }
 
-  if (a > (cellCount-numColumns))//right side calculates last possible cell not in the last row, if our cell comes after, then it's in the last row
+  if (a > (cellCount-numColumns))//calculates last possible cell not in the last row, if a is greater than this, then it's in the last row
   {
     isAtEdgeBottom = true;
     console.log(a + "is on bottom");
@@ -156,14 +133,13 @@ const clicked = function(a)//cell a was clicked!
 
   //now that we have an idea of where the cell is, we can check surrounding cells
 
-  if (!isAtEdgeTop)
+  if (!isAtEdgeTop)//we can't check the cell above us if we are already in the top row lol
   {
     //console.log("hey");
-    //check the cell directly above cell a, only if we are not on the top row
-    if (isAMine(a-numColumns))
+    if (isAMine(a-numColumns))//up one cell
     {
       //console.log("we did a thing");
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -171,7 +147,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a-numColumns+1))//cell up one and right one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -179,7 +155,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a+1))//cell right one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -187,7 +163,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a+numColumns+1))//cell right one and down one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -195,7 +171,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a+numColumns))//cell down one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -203,7 +179,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a+numColumns-1))//cell left one and down one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -211,7 +187,7 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a-1))//cell left one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
@@ -219,19 +195,21 @@ const clicked = function(a)//cell a was clicked!
   {
     if (isAMine(a-numColumns-1))//cell up one and left one
     {
-      numNearMines++;
+      numNearMines++;//if that cell contains a mine, remember that
     }
   }
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
   cell.textContent = numNearMines;
+
   console.log(numNearMines);
+
   if (numNearMines > 0)
   {
     //show the number of mines close to this cell
   }
-  else if (numNearMines == 0) //I've disabled this for now
+  else if (numNearMines == 0)//if each if the surrounding eight cells don't contain a mine, then they're safe to click on right? Lets save some time for the user and click those cell for them, losing almost no time!
   {
     console.log("gonna look at other stuff now");
     //call this function recursivly for each of the 8 surrounding mines
@@ -296,9 +274,37 @@ const clicked = function(a)//cell a was clicked!
   }
 
 }
+const generateGrid = function(){
+  let cellId = 0;
 
+  while (cellId < cellCount)
+  {
+    cellId += 1;
+    let cell = document.createElement('div');
+    cell.className = "cell";
+    cell.id = cellId;//id of cell
 
+<<<<<<< HEAD
 
 flagCounter();
 generateGrid();
+=======
+>>>>>>> main
 
+    board.appendChild(cell);
+
+  }
+
+  cellId = 0;
+  while (cellId < cellCount)
+  {
+    cellId++;
+    let theCell = document.getElementById(cellId);
+    theCell.addEventListener("click",function() {clicked(theCell.id)});
+  }
+
+  generateMines();
+}
+
+
+generateGrid();
