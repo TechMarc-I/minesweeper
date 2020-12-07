@@ -2,14 +2,17 @@ let numRows = 10;
 let numColumns = 10;
 let boardContainer = document.querySelector("#board");
 let cellCount = numRows*numColumns;
+//Variable for starting number of mines
+let mines = 10;
+//Variable for flags
+let flags = mines
 
 let bombIndex = [];
 let checkedCells = [];
 
 //Function to generate Mine locations
 const generateMines = function() {
-  //Variable for starting number of mines
-  let mines = 10;
+  
   //Variable for starting cell
   let cellIndex = 0;
 
@@ -290,3 +293,4 @@ const clicked = function(a)//cell a was clicked!
 
 
 generateGrid();
+
