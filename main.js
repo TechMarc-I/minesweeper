@@ -76,6 +76,12 @@ const generateGrid = function(){
   generateMines();
 }
 
+//Build Flag Counter
+const flagCounter = function() {
+  let flagContainer = document.querySelector('#flagCounter')
+  flagContainer.textContent = flags;
+}
+
 const blerg = function()
 {
 
@@ -291,6 +297,6 @@ const clicked = function(a)//cell a was clicked!
 
 }
 
-
+flagCounter();
 generateGrid();
 
