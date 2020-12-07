@@ -297,6 +297,8 @@ const clicked = function(a)//cell a was clicked!
 
 }
 
+
+
 flagCounter();
 generateGrid();
 
