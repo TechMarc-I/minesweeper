@@ -284,12 +284,6 @@ const generateGrid = function(){
     cell.className = "cell";
     cell.id = cellId;//id of cell
 
-<<<<<<< HEAD
-
-flagCounter();
-generateGrid();
-=======
->>>>>>> main
 
     board.appendChild(cell);
 
