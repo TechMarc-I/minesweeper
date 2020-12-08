@@ -38,20 +38,25 @@ const generateMines = function() {
   //Loop until mines remaining = 0
   while (mines !== 0) {
 
-    //Create a random number from 1-10
-    let random = Math.round(Math.random()*10);
+    //Create a random number from 1-15
+    let random = Math.round(Math.random()*20);
     cellIndex += 1;
 
     let currentCell = document.getElementById(cellIndex);
 
     //If random number = 5 and no bomb exists in that cell, place bomb in that cell
-    if (random === 5 && currentCell.textContent !== "bomb") {
-      currentCell.textContent = "bomb"
+    if (random === 5 && currentCell.firstElementChild === null) {
+      //Create Mine Sprite
+      let mineSprite = document.createElement('img');
+      mineSprite.className = 'bombSprite';
+      mineSprite.src = 'assets/mine.png';
+
+      currentCell.appendChild(mineSprite);
       mines -= 1;
     };
 
     //If currentCell now contains a bomb, push cellID to bomb index
-    if (currentCell.textContent === "bomb") {
+    if (currentCell.firstElementChild !== null) {
       bombIndex.push(parseInt(currentCell.id,10));
     }
 
@@ -370,7 +375,7 @@ const canPlaceFlag = function () {
       } 
       
       //If no child elements and flags > 0, place a flag
-      else if ((theCell.textContent == '' || theCell.textContent == 'bomb') && flags !== 0) {
+      else if ((theCell.firstChild === null || theCell.firstElementChild('img').className === 'bombSprite') && flags !== 0) {
         theCell.appendChild(flag);
 
         flags -= 1;
