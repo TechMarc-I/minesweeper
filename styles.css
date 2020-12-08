@@ -46,11 +46,23 @@
   width: 35px;
   height: 35px;
   border: 4px outset #BEBEBE;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cellSprite {
+  width: 25px;
+  height: 25px;
 }
 
 .headerItem {
-  width: 80px;
+  width: 70px;
   height: 50px;
   background-color: black;
   color: red;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
