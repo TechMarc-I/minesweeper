@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Cursed Timer ULiL';
+  src: url('cursed-timer-ulil-font/CursedTimerUlil-Aznm.ttf');
+}
+
 *
 {
   margin: 0;
@@ -63,7 +68,8 @@
   height: 50px;
   background-color: black;
   color: red;
-  font-size: 2em;
+  font-family: 'Cursed Timer ULiL', sans-serif;
+  font-size: 3em;
   display: flex;
   align-items: center;
   justify-content: flex-end;
