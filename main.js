@@ -335,31 +335,52 @@ const generateGrid = function(){
 //Place Flag
 const canPlaceFlag = function () {
   cellId = 0;
-    while (cellId < cellCount)
-    {
-      cellId += 1;
-      let theCell = document.getElementById(cellId);
+  while (cellId < cellCount)
+  {
+    cellId += 1;
+    let theCell = document.getElementById(cellId);
 
+    //Event Listener on all Cells
+    theCell.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      
+      //Flag IMG
+      let flag = document.createElement('img');
+      flag.className = 'flagSprite';
+      flag.src = 'assets/flag.png';
 
-      theCell.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
+      //Check for child elements
+      if (theCell.lastElementChild !== null) {
+        
+        //Check to see if last child is called flagSprite
+        //If last child is flagSprite, remove the sprite image
+        if (theCell.lastChild.className === 'flagSprite') {
+          theCell.removeChild(theCell.lastElementChild);
+          flags += 1;
 
-        if (flags != 0) {
+        } else if (theCell.lastChild.className !== 'flagSprite' && flags !== 0) /*last element != flagSprite and there are still flags remaining*/ {
+          theCell.appendChild(flag);
 
-          if (theCell.textContent == '' || theCell.textContent == 'bomb') {
-            //Flag IMG
-            let flag = document.createElement('img');
-            flag.className = 'cellSprite';
-            flag.src = 'assets/flag.png';
-            theCell.appendChild(flag);
+          flags -= 1;
 
-            flags -= 1;
-            flagCount();
-          }
         }
 
-      });
-    }
+        flagCount();
+
+      } 
+      
+      //If no child elements and flags > 0, place a flag
+      else if ((theCell.textContent == '' || theCell.textContent == 'bomb') && flags !== 0) {
+        theCell.appendChild(flag);
+
+        flags -= 1;
+        flagCount();
+      }
+
+    });
+
+  }
+
 }
 
 generateGrid();

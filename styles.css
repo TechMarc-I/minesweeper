@@ -51,6 +51,7 @@
   align-items: center;
 }
 
+.flagSprite,
 .cellSprite {
   width: 25px;
   height: 25px;
