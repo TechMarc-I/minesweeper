@@ -11,6 +11,23 @@ let bombIndex = [];
 
 let checkedCells = [];//so we can't click on a cell twice
 
+const checkWin = function(a)
+{
+  let checkCell = 0;
+  while(checkCell < cellCount)
+  {
+    checkCell++;
+    if (!(checkedCells.includes(checkCell)))//if we haven't checked the cell yet
+    {
+      if (!(bombIndex.includes(checkCell)))//AND is not a mine
+      {
+        return false;//we didn't win yet, there are still unchecked cells that are not mines
+      }
+    }
+  }
+  return true;//we looked through everything, all cells either exist in checked cells or is a mine
+}
+
 //Function to generate Mine locations
 const generateMines = function() {
 
@@ -34,14 +51,13 @@ const generateMines = function() {
 
     //If currentCell now contains a bomb, push cellID to bomb index
     if (currentCell.textContent === "bomb") {
-      bombIndex.push(currentCell.id);
+      bombIndex.push(parseInt(currentCell.id,10));
     }
 
     //If bombs still remain when the all cells have run through, run through all cells again until no bombs left
     if (cellIndex == 100 && mines !== 0) {
       cellIndex = 0;
     };
-
   }
 
   //Display bombIndex in console.
@@ -82,17 +98,17 @@ const clicked = function(cellNumber)//cell a was clicked!
   var isAtEdgeBottom = false;
   var isAtEdgeLeft = false;
   var numNearMines = 0;
-  console.log("checking " + a);
+  //console.log("checking " + a);
 
 
   if(checkedCells.includes(a))//did we check that cell aready?
   {
-    console.log("This cell was already checked");
+    //console.log("This cell was already checked");
     return;//we will be stuck in an infinite loop if we don't do this
   }
   else
   {
-    console.log("This is the first time we clicked this cell");
+    //console.log("This is the first time we clicked this cell");
     checkedCells.push(a);//make sure we don't check this cell again
     cell.style.backgroundColor = 'green';//turn the cell green for now
   }
@@ -109,26 +125,26 @@ const clicked = function(cellNumber)//cell a was clicked!
   if (a <= numColumns)//if a is less that numColumns(default is 10)
   {
     isAtEdgeTop = true;//then we are in the top row
-    console.log(a + "is on top");
+    //console.log(a + "is on top");
   }
 
   if (a % numColumns == 0)//remainder of a divided by number of columns equals 0 when on right edge
   {
     isAtEdgeRight = true;
-    console.log(a + "is on right");
+    //console.log(a + "is on right");
     //console.log("variable is" + isAtRightEdge);
   }
 
   if (a > (cellCount-numColumns))//calculates last possible cell not in the last row, if a is greater than this, then it's in the last row
   {
     isAtEdgeBottom = true;
-    console.log(a + "is on bottom");
+    //console.log(a + "is on bottom");
   }
 
   if (a % numColumns == 1)// remainder of cell id divided by number of columns equals 1 when on left edge
   {
     isAtEdgeLeft = true;
-    console.log(a + "is on left");
+    //console.log(a + "is on left");
   }
 
   //now that we have an idea of where the cell is, we can check surrounding cells
@@ -199,11 +215,19 @@ const clicked = function(cellNumber)//cell a was clicked!
     }
   }
 
+  if (checkWin(a))//see if we won
+  {
+    for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
+    {
+      document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
+    }
+  }
+
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
   cell.textContent = numNearMines;
 
-  console.log(numNearMines);
+  //console.log(numNearMines);
 
   if (numNearMines > 0)
   {
@@ -211,25 +235,25 @@ const clicked = function(cellNumber)//cell a was clicked!
   }
   else if (numNearMines == 0)//if each if the surrounding eight cells don't contain a mine, then they're safe to click on right? Lets save some time for the user and click those cell for them, losing almost no time!
   {
-    console.log("gonna look at other stuff now");
+    //console.log("gonna look at other stuff now");
     //call this function recursivly for each of the 8 surrounding mines
     if (!isAtEdgeTop)
     {
-      console.log(a + " is checking pos 1 now");
+      //console.log(a + " is checking pos 1 now");
       clicked(a-numColumns);
     }
 
     if (!isAtEdgeTop && !isAtEdgeRight)
     {
 
-      console.log(a + " is checking pos 2 now");
+      //console.log(a + " is checking pos 2 now");
       clicked((a-numColumns)+1);
     }
 
     if (!isAtEdgeRight)
     {
 
-      console.log(a + " is checking pos 3 now");
+      //console.log(a + " is checking pos 3 now");
       clicked(a+1);
     }
 
@@ -237,7 +261,7 @@ const clicked = function(cellNumber)//cell a was clicked!
     if (!isAtEdgeRight && !isAtEdgeBottom)
     {
 
-      console.log(a + " is checking pos 4 now");
+      //console.log(a + " is checking pos 4 now");
       clicked(a+numColumns+1);
     }
 
@@ -245,7 +269,7 @@ const clicked = function(cellNumber)//cell a was clicked!
     if (!isAtEdgeBottom)
     {
 
-      console.log(a + " is checking pos 5 now");
+      //console.log(a + " is checking pos 5 now");
       clicked(a+numColumns);
     }
 
@@ -253,7 +277,7 @@ const clicked = function(cellNumber)//cell a was clicked!
     if (!isAtEdgeLeft && !isAtEdgeBottom)
     {
 
-      console.log(a + " is checking pos 6 now");
+      //console.log(a + " is checking pos 6 now");
       clicked(a+numColumns-1);
     }
 
@@ -261,14 +285,14 @@ const clicked = function(cellNumber)//cell a was clicked!
     if (!isAtEdgeLeft)
     {
 
-      console.log(a + " is checking pos 7 now");
+      //console.log(a + " is checking pos 7 now");
       clicked(a-1);
     }
 
     if (!isAtEdgeTop && !isAtEdgeLeft)
     {
 
-      console.log(a + " is checking pos 8 now");
+      //console.log(a + " is checking pos 8 now");
       clicked(a-numColumns-1);
     }
   }
