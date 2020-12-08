@@ -45,13 +45,18 @@ const generateMines = function() {
     let currentCell = document.getElementById(cellIndex);
 
     //If random number = 5 and no bomb exists in that cell, place bomb in that cell
-    if (random === 5 && currentCell.textContent !== "bomb") {
-      currentCell.textContent = "bomb"
+    if (random === 5 && currentCell.firstElementChild === null) {
+      //Create Mine Sprite
+      let mineSprite = document.createElement('img');
+      mineSprite.className = 'bombSprite';
+      mineSprite.src = 'assets/mine.png';
+
+      currentCell.appendChild(mineSprite);
       mines -= 1;
     };
 
     //If currentCell now contains a bomb, push cellID to bomb index
-    if (currentCell.textContent === "bomb") {
+    if (currentCell.firstElementChild !== null) {
       bombIndex.push(parseInt(currentCell.id,10));
     }
 
