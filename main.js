@@ -38,8 +38,8 @@ const generateMines = function() {
   //Loop until mines remaining = 0
   while (mines !== 0) {
 
-    //Create a random number from 1-10
-    let random = Math.round(Math.random()*10);
+    //Create a random number from 1-15
+    let random = Math.round(Math.random()*20);
     cellIndex += 1;
 
     let currentCell = document.getElementById(cellIndex);
