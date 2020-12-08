@@ -2,10 +2,11 @@ let numRows = 10;
 let numColumns = 10;
 let boardContainer = document.querySelector("#board");
 let cellCount = numRows*numColumns;
+
 //Variable for starting number of mines
 let mines = 10;
 //Variable for flags
-let flags = mines
+let flags = mines;
 
 let bombIndex = [];
 
@@ -49,6 +50,12 @@ const generateMines = function() {
 
 }
 
+//Update Flag Counter
+const flagCount = function() {
+  let flagContainer = document.querySelector('#flagCounter')
+  flagContainer.textContent = flags;
+}
+
 //checked in clicked function
 const isAMine = function(a)
 {
@@ -61,9 +68,6 @@ const isAMine = function(a)
   }
   return false;
 }
-
-//Function to Create Grid
-
 
 const revealOtherMines = function()//happens when you accidently click a mine
 {
@@ -274,6 +278,8 @@ const clicked = function(cellNumber)//cell a was clicked!
   }
 
 }
+
+//Function to Create Grid
 const generateGrid = function(){
   let cellId = 0;
 
@@ -298,7 +304,39 @@ const generateGrid = function(){
   }
 
   generateMines();
+
+  flagCount();
 }
 
+//Place Flag
+const canPlaceFlag = function () {
+  cellId = 0;
+    while (cellId < cellCount)
+    {
+      cellId += 1;
+      let theCell = document.getElementById(cellId);
+
+
+      theCell.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+
+        if (flags != 0) {
+
+          if (theCell.textContent == '' || theCell.textContent == 'bomb') {
+            //Flag IMG
+            let flag = document.createElement('img');
+            flag.className = 'cellSprite';
+            flag.src = 'assets/flag.png';
+            theCell.appendChild(flag);
+
+            flags -= 1;
+            flagCount();
+          }
+        }
+
+      });
+    }
+}
 
 generateGrid();
+canPlaceFlag();
