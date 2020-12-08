@@ -375,7 +375,7 @@ const canPlaceFlag = function () {
       } 
       
       //If no child elements and flags > 0, place a flag
-      else if ((theCell.textContent == '' || theCell.textContent == 'bomb') && flags !== 0) {
+      else if ((theCell.firstChild === null || theCell.firstElementChild('img').className === 'bombSprite') && flags !== 0) {
         theCell.appendChild(flag);
 
         flags -= 1;
