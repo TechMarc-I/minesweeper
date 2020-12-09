@@ -362,7 +362,7 @@ const generateGrid = function(){
     theCell.addEventListener("click",function() {clicked(theCell.id)});
   }
 
-  face.src = 'Assets/happyFace.png'
+  face.src = 'assets/happyFace.png'
 
   generateMines();
   flagCount();
