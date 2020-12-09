@@ -50,8 +50,10 @@
 {
   width: 35px;
   height: 35px;
+  font-size: 1.4em;
+  font-weight: 900;
   border: 4px outset #BEBEBE;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }

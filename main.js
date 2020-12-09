@@ -137,7 +137,10 @@ const clicked = function(cellNumber)//cell a was clicked!
   {
     //console.log("This is the first time we clicked this cell");
     checkedCells.push(a);//make sure we don't check this cell again
-    cell.style.backgroundColor = 'green';//turn the cell green for now
+
+    //Inverts cell and boarder colors
+    cell.style.backgroundColor = '#BEBEBE'; 
+    cell.style.border = '1px solid #DCDCDC';
   }
 
   if (isAMine(a))
@@ -264,7 +267,27 @@ const clicked = function(cellNumber)//cell a was clicked!
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
-  cell.textContent = numNearMines;
+  if (numNearMines !== 0) {
+    cell.textContent = numNearMines;
+
+    if (numNearMines === 1) {
+      cell.style.color = 'blue';
+    } else if (numNearMines === 2) {
+      cell.style.color = 'green';
+    } else if (numNearMines === 3) {
+      cell.style.color = 'red';
+    } else if (numNearMines === 4) {
+      cell.style.color = 'purple';
+    } else if (numNearMines === 5) {
+      cell.style.color = 'maroon';
+    } else if (numNearMines === 6) {
+      cell.style.color = 'turquoise';
+    } else if (numNearMines === 7) {
+      cell.style.color = 'black';
+    } else if (numNearMines === 8) {
+      cell.style.color = 'darkgray';
+    }
+  }
 
   //console.log(numNearMines);
 
