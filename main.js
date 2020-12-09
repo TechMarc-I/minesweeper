@@ -101,6 +101,9 @@ const revealOtherMines = function()//happens when you accidently click a mine
   {
     document.getElementById(bombIndex[i]).style.backgroundColor = 'red';//turns all mines red
   }
+  
+  document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+
 
   //Make all cells unclickable
   checkedCells = [];
@@ -252,6 +255,9 @@ const clicked = function(cellNumber)//cell a was clicked!
       document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
     }
 
+    document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+
+
     //Make all cells unclickable
     checkedCells = [];
     let cellId = 0;
@@ -362,7 +368,7 @@ const clicked = function(cellNumber)//cell a was clicked!
 }
 
 //Function to Create Grid
-const generateGrid = function(){
+const generateGrid = function() {
   let cellId = 0;
 
   while (cellId < cellCount)
@@ -440,6 +446,18 @@ const canPlaceFlag = function () {
 
   }
 
+}
+
+//TEMPORARY FUNCTION FOR TESTING TO REVEAL BOMB LOCATIONS
+let x = 0;
+const devTest = function () {
+  if (x === 0) {
+    document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+    x += 1;
+  } else {
+    document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "none");
+    x -= 1;
+  }
 }
 
 generateGrid();
