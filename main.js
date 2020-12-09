@@ -12,6 +12,11 @@ let bombIndex = [];
 
 let checkedCells = [];//so we can't click on a cell twice
 
+//Variables for smiley/reset button
+let smileyContainer = document.querySelector('#smileyface');
+let face = document.querySelector('#face');
+
+
 const checkWin = function(a)
 {
   let checkCell = 0;
@@ -38,7 +43,7 @@ const generateMines = function() {
   //Loop until mines remaining = 0
   while (mines !== 0) {
 
-    //Create a random number from 1-15
+    //Create a random number from 1-20
     let random = Math.round(Math.random()*20);
     cellIndex += 1;
 
@@ -96,6 +101,19 @@ const revealOtherMines = function()//happens when you accidently click a mine
   {
     document.getElementById(bombIndex[i]).style.backgroundColor = 'red';//turns all mines red
   }
+
+  //Make all cells unclickable
+  checkedCells = [];
+  let cellId = 0;
+  while (cellId < 100) {
+    cellId += 1;
+    cell = document.getElementById(cellId);
+
+    checkedCells.push(cellId);
+  }
+
+  face.src = 'assets/deadFace.png';
+
 }
 
 const clicked = function(cellNumber)//cell a was clicked!
@@ -230,6 +248,18 @@ const clicked = function(cellNumber)//cell a was clicked!
     {
       document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
     }
+
+    //Make all cells unclickable
+    checkedCells = [];
+    let cellId = 0;
+    while (cellId < 100) {
+      cellId += 1;
+      cell = document.getElementById(cellId);
+
+      checkedCells.push(cellId);
+    }
+
+    face.src = 'assets/winFace.png';
   }
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
@@ -332,8 +362,9 @@ const generateGrid = function(){
     theCell.addEventListener("click",function() {clicked(theCell.id)});
   }
 
-  generateMines();
+  face.src = 'Assets/happyFace.png'
 
+  generateMines();
   flagCount();
 }
 
@@ -388,5 +419,23 @@ const canPlaceFlag = function () {
 
 }
 
+
 generateGrid();
 canPlaceFlag();
+
+smileyContainer.addEventListener('click', function() {
+  bombIndex = [];
+  checkedCells = [];
+  let cellId = 0;
+  while (cellId < 100) {
+    cellId += 1;
+    cell = document.getElementById(cellId);
+
+    boardContainer.removeChild(cell);
+  }
+  mines = 10;
+  flags = mines;
+  
+  generateGrid();
+  canPlaceFlag();
+})
