@@ -419,7 +419,6 @@ const canPlaceFlag = function () {
 
 }
 
-
 generateGrid();
 canPlaceFlag();
 
