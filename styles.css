@@ -74,3 +74,17 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+#smileyface {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px outset #BEBEBE;
+}
+
+#face {
+  width: 50px;
+  height: 50px;
+}
