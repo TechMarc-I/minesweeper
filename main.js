@@ -53,7 +53,7 @@ const checkWin = function(a)
     }
   }
   shouldTimerStop = true;//stop the timer from counting up
-  document.getElementById(100).textContent = "g";
+  document.getElementById(100).textContent = "";
   return true;//we looked through everything, all cells either exist in checked cells or is a mine
 }
 
