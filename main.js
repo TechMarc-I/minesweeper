@@ -420,6 +420,7 @@ const generateGrid = function() {
     cellId += 1;
     let cell = document.createElement('div');
     cell.className = "cell";
+    cell.setAttribute('data-long-press-delay', '500');
     cell.id = cellId;//id of cell
 
 
