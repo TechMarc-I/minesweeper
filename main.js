@@ -12,10 +12,26 @@ let bombIndex = [];
 
 let checkedCells = [];//so we can't click on a cell twice
 
+
 //Variables for smiley/reset button
 let smileyContainer = document.querySelector('#smileyface');
 let face = document.querySelector('#face');
 
+const hasAFlag = function(cellId)
+{
+  let theCell = document.getElementById(cellId);
+
+  if (theCell.lastElementChild !== null)
+  {
+    //Check to see if last child is called flagSprite
+    //If last child is flagSprite, it has a flag
+    if (theCell.lastChild.className === 'flagSprite')
+    {
+      return true;
+    }
+  }
+  return false;
+}
 
 const checkWin = function(a)
 {
@@ -130,6 +146,10 @@ const clicked = function(cellNumber)//cell a was clicked!
   var numNearMines = 0;
   //console.log("checking " + a);
 
+  if (hasAFlag(a))//does this cell have a flag?
+  {
+    return;
+  }
 
   if(checkedCells.includes(a))//did we check that cell aready?
   {
@@ -145,6 +165,8 @@ const clicked = function(cellNumber)//cell a was clicked!
     cell.style.backgroundColor = '#BEBEBE'; 
     cell.style.border = '1px solid #DCDCDC';
   }
+
+
 
   if (isAMine(a))
   {
@@ -408,7 +430,7 @@ const canPlaceFlag = function () {
     //Event Listener on all Cells
     theCell.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      
+
       //Flag IMG
       let flag = document.createElement('img');
       flag.className = 'flagSprite';
@@ -416,7 +438,7 @@ const canPlaceFlag = function () {
 
       //Check for child elements
       if (theCell.lastElementChild !== null) {
-        
+
         //Check to see if last child is called flagSprite
         //If last child is flagSprite, remove the sprite image
         if (theCell.lastChild.className === 'flagSprite') {
@@ -432,8 +454,8 @@ const canPlaceFlag = function () {
 
         flagCount();
 
-      } 
-      
+      }
+
       //If no child elements and flags > 0, place a flag
       else if ((theCell.firstChild === null || theCell.firstElementChild('img').className === 'bombSprite') && flags !== 0) {
         theCell.appendChild(flag);
@@ -475,7 +497,7 @@ smileyContainer.addEventListener('click', function() {
   }
   mines = 10;
   flags = mines;
-  
+
   generateGrid();
   canPlaceFlag();
 })
