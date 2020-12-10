@@ -2,6 +2,9 @@ let numRows = 10;
 let numColumns = 10;
 let boardContainer = document.querySelector("#board");
 let cellCount = numRows*numColumns;
+let isTimerSet = false;
+let time = 0;
+let shouldTimerStop = false;
 
 //Variable for starting number of mines
 let mines = 10;
@@ -47,6 +50,7 @@ const checkWin = function(a)
       }
     }
   }
+  shouldTimerStop = true;//stop the timer from counting up
   return true;//we looked through everything, all cells either exist in checked cells or is a mine
 }
 
@@ -117,9 +121,10 @@ const revealOtherMines = function()//happens when you accidently click a mine
   {
     document.getElementById(bombIndex[i]).style.backgroundColor = 'red';//turns all mines red
   }
-  
+
   document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
 
+  shouldTimerStop = true;//stop the timer from counting up
 
   //Make all cells unclickable
   checkedCells = [];
@@ -135,6 +140,25 @@ const revealOtherMines = function()//happens when you accidently click a mine
 
 }
 
+const addTime = function()
+{
+  if (!shouldTimerStop)
+  {
+    time++;
+    let appendTime = time;
+    if (time <= 99)//add a 0 to the front if the time is a two or one digit number
+    {
+      appendTime = "0" + appendTime;
+    }
+    if (time <= 9)//add another 0 to the front if the time is a one digit number
+    {
+      appendTime = "0" + appendTime;
+    }
+    let timeContainer = document.querySelector('#timer');
+    timeContainer.textContent = appendTime;
+  }
+}
+
 const clicked = function(cellNumber)//cell a was clicked!
 {
   let a = parseInt(cellNumber,10);
@@ -144,7 +168,13 @@ const clicked = function(cellNumber)//cell a was clicked!
   var isAtEdgeBottom = false;
   var isAtEdgeLeft = false;
   var numNearMines = 0;
-  //console.log("checking " + a);
+
+  if (!isTimerSet)//timer starts on the first click!
+  {
+    isTimerSet = true;
+    shouldTimerStop = false;
+    setInterval(addTime,1000);
+  }
 
   if (hasAFlag(a))//does this cell have a flag?
   {
@@ -162,11 +192,11 @@ const clicked = function(cellNumber)//cell a was clicked!
     checkedCells.push(a);//make sure we don't check this cell again
 
     //Inverts cell and boarder colors
-    cell.style.backgroundColor = '#BEBEBE'; 
+    cell.style.backgroundColor = '#BEBEBE';
     cell.style.border = '1px solid #DCDCDC';
   }
 
-
+  shouldTimerStop = false;
 
   if (isAMine(a))
   {
@@ -180,36 +210,29 @@ const clicked = function(cellNumber)//cell a was clicked!
   if (a <= numColumns)//if a is less that numColumns(default is 10)
   {
     isAtEdgeTop = true;//then we are in the top row
-    //console.log(a + "is on top");
   }
 
   if (a % numColumns == 0)//remainder of a divided by number of columns equals 0 when on right edge
   {
     isAtEdgeRight = true;
-    //console.log(a + "is on right");
-    //console.log("variable is" + isAtRightEdge);
   }
 
   if (a > (cellCount-numColumns))//calculates last possible cell not in the last row, if a is greater than this, then it's in the last row
   {
     isAtEdgeBottom = true;
-    //console.log(a + "is on bottom");
   }
 
   if (a % numColumns == 1)// remainder of cell id divided by number of columns equals 1 when on left edge
   {
     isAtEdgeLeft = true;
-    //console.log(a + "is on left");
   }
 
   //now that we have an idea of where the cell is, we can check surrounding cells
 
   if (!isAtEdgeTop)//we can't check the cell above us if we are already in the top row lol
   {
-    //console.log("hey");
     if (isAMine(a-numColumns))//up one cell
     {
-      //console.log("we did a thing");
       numNearMines++;//if that cell contains a mine, remember that
     }
   }
@@ -289,7 +312,6 @@ const clicked = function(cellNumber)//cell a was clicked!
 
       checkedCells.push(cellId);
     }
-
     face.src = 'assets/winFace.png';
   }
 
@@ -415,6 +437,8 @@ const generateGrid = function() {
 
   face.src = 'assets/happyFace.png'
 
+  time = 0;
+
   generateMines();
   flagCount();
 }
@@ -497,6 +521,9 @@ smileyContainer.addEventListener('click', function() {
   }
   mines = 10;
   flags = mines;
+  shouldTimerStop = true;
+  let timeContainer = document.querySelector('#timer');
+  timeContainer.textContent = "000";
 
   generateGrid();
   canPlaceFlag();

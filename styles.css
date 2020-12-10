@@ -11,7 +11,7 @@
 }
 
 /*Game Window*/
-#gameWindow 
+#gameWindow
 {
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 }
 
 /*Header*/
-#header 
+#header
 {
   height: 70px;
   width: 360px;
@@ -79,6 +79,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+#timer
+{
+  width: 95px;
 }
 
 #smileyface {
