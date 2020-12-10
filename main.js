@@ -490,6 +490,45 @@ const canPlaceFlag = function () {
 
     });
 
+    //Touch and Hold Event Listener on all Cells (for iOS Devices)
+    theCell.addEventListener('long-press', function(e) {
+      //e.preventDefault();
+
+      //Flag IMG
+      let flag = document.createElement('img');
+      flag.className = 'flagSprite';
+      flag.src = 'assets/flag.png';
+
+      //Check for child elements
+      if (theCell.lastElementChild !== null) {
+
+        //Check to see if last child is called flagSprite
+        //If last child is flagSprite, remove the sprite image
+        if (theCell.lastChild.className === 'flagSprite') {
+          theCell.removeChild(theCell.lastElementChild);
+          flags += 1;
+
+        } else if (theCell.lastChild.className !== 'flagSprite' && flags !== 0) /*last element != flagSprite and there are still flags remaining*/ {
+          theCell.appendChild(flag);
+
+          flags -= 1;
+
+        }
+
+        flagCount();
+
+      }
+
+      //If no child elements and flags > 0, place a flag
+      else if ((theCell.firstChild === null || theCell.firstElementChild('img').className === 'bombSprite') && flags !== 0) {
+        theCell.appendChild(flag);
+
+        flags -= 1;
+        flagCount();
+      }
+
+    });
+
   }
 
 }
