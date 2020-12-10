@@ -5,6 +5,8 @@ let cellCount = numRows*numColumns;
 let isTimerSet = false;
 let time = 0;
 let shouldTimerStop = false;
+let cellWidth = 36;
+let maxMines = 10;
 
 //Variable for starting number of mines
 let mines = 10;
@@ -51,6 +53,7 @@ const checkWin = function(a)
     }
   }
   shouldTimerStop = true;//stop the timer from counting up
+  document.getElementById(100).textContent = "g";
   return true;//we looked through everything, all cells either exist in checked cells or is a mine
 }
 
@@ -64,7 +67,7 @@ const generateMines = function() {
   while (mines !== 0) {
 
     //Create a random number from 1-20
-    let random = Math.round(Math.random()*20);
+    let random = Math.round(Math.random()*200);
     cellIndex += 1;
 
     let currentCell = document.getElementById(cellIndex);
@@ -78,15 +81,16 @@ const generateMines = function() {
 
       currentCell.appendChild(mineSprite);
       mines -= 1;
+      bombIndex.push(parseInt(currentCell.id,10));
     };
 
     //If currentCell now contains a bomb, push cellID to bomb index
     if (currentCell.firstElementChild !== null) {
-      bombIndex.push(parseInt(currentCell.id,10));
+
     }
 
     //If bombs still remain when the all cells have run through, run through all cells again until no bombs left
-    if (cellIndex == 100 && mines !== 0) {
+    if (cellIndex == cellCount && mines !== 0) {
       cellIndex = 0;
     };
   }
@@ -129,7 +133,7 @@ const revealOtherMines = function()//happens when you accidently click a mine
   //Make all cells unclickable
   checkedCells = [];
   let cellId = 0;
-  while (cellId < 100) {
+  while (cellId < cellCount) {
     cellId += 1;
     cell = document.getElementById(cellId);
 
@@ -293,27 +297,7 @@ const clicked = function(cellNumber)//cell a was clicked!
     }
   }
 
-  if (checkWin(a))//see if we won
-  {
-    for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
-    {
-      document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
-    }
 
-    document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
-
-
-    //Make all cells unclickable
-    checkedCells = [];
-    let cellId = 0;
-    while (cellId < 100) {
-      cellId += 1;
-      cell = document.getElementById(cellId);
-
-      checkedCells.push(cellId);
-    }
-    face.src = 'assets/winFace.png';
-  }
 
   //now we've determined two things, the current cell is NOT a mine, and we found the number mines touching this one
 
@@ -337,6 +321,8 @@ const clicked = function(cellNumber)//cell a was clicked!
     } else if (numNearMines === 8) {
       cell.style.color = 'darkgray';
     }
+
+
   }
 
   //console.log(numNearMines);
@@ -409,12 +395,34 @@ const clicked = function(cellNumber)//cell a was clicked!
     }
   }
 
+  if (checkWin(a))//see if we won
+  {
+    for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
+    {
+      document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
+    }
+
+    document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+
+
+    //Make all cells unclickable
+    checkedCells = [];
+    let cellId = 0;
+    while (cellId < 100) {
+      cellId += 1;
+      cell = document.getElementById(cellId);
+
+      checkedCells.push(cellId);
+    }
+    face.src = 'assets/winFace.png';
+  }
+
 }
 
 //Function to Create Grid
 const generateGrid = function() {
   let cellId = 0;
-
+  cellCount = numRows*numColumns;
   while (cellId < cellCount)
   {
     cellId += 1;
@@ -427,6 +435,12 @@ const generateGrid = function() {
     board.appendChild(cell);
 
   }
+
+
+  boardContainer.style.width = (cellWidth * numColumns) + "px";
+  let wide = cellWidth * numColumns + 40;
+  console.log(wide);
+  document.getElementById("gameWindow").style.width = wide + "px";
 
   cellId = 0;
   while (cellId < cellCount)
@@ -553,13 +567,13 @@ smileyContainer.addEventListener('click', function() {
   bombIndex = [];
   checkedCells = [];
   let cellId = 0;
-  while (cellId < 100) {
+  while (cellId < cellCount) {
     cellId += 1;
     cell = document.getElementById(cellId);
 
     boardContainer.removeChild(cell);
   }
-  mines = 10;
+  mines = maxMines;
   flags = mines;
   shouldTimerStop = true;
   let timeContainer = document.querySelector('#timer');
@@ -567,4 +581,67 @@ smileyContainer.addEventListener('click', function() {
 
   generateGrid();
   canPlaceFlag();
-})
+});
+document.getElementById("small").addEventListener('click',function(){
+  numRows = 10;
+  numColumns = 10;
+  bombIndex = [];
+  checkedCells = [];
+  let cellId = 0;
+  while (cellId < cellCount) {
+    cellId += 1;
+    cell = document.getElementById(cellId);
+
+    boardContainer.removeChild(cell);
+  }
+  mines = 10;
+  maxMines = 10;
+  flags = mines;
+  shouldTimerStop = true;
+  let timeContainer = document.querySelector('#timer');
+  timeContainer.textContent = "000";
+  generateGrid();
+  canPlaceFlag();
+});
+document.getElementById("medium").addEventListener('click',function(){
+  numRows = 12;
+  numColumns = 15;
+  bombIndex = [];
+  checkedCells = [];
+  let cellId = 0;
+  while (cellId < cellCount) {
+    cellId += 1;
+    cell = document.getElementById(cellId);
+
+    boardContainer.removeChild(cell);
+  }
+  mines = 25;
+  maxMines = 25;
+  flags = mines;
+  shouldTimerStop = true;
+  let timeContainer = document.querySelector('#timer');
+  timeContainer.textContent = "000";
+  generateGrid();
+  canPlaceFlag();
+});
+document.getElementById("large").addEventListener('click',function(){
+  numRows = 15;
+  numColumns = 20;
+  bombIndex = [];
+  checkedCells = [];
+  let cellId = 0;
+  while (cellId < cellCount) {
+    cellId += 1;
+    cell = document.getElementById(cellId);
+
+    boardContainer.removeChild(cell);
+  }
+  mines = 50;
+  maxMines = 50;
+  flags = mines;
+  shouldTimerStop = true;
+  let timeContainer = document.querySelector('#timer');
+  timeContainer.textContent = "000";
+  generateGrid();
+  canPlaceFlag();
+});
