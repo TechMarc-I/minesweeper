@@ -1,15 +1,15 @@
 @font-face {
-  font-family: 'Cursed Timer ULiL';
-  src: url('cursed-timer-ulil-font/CursedTimerUlil-Aznm.ttf');
+  font-family: "Cursed Timer ULiL";
+  src: url("cursed-timer-ulil-font/CursedTimerUlil-Aznm.ttf");
 }
 
 @font-face {
-  font-family: 'Silkscreen';
-  src: url('Silkscreen-fontfacekit/web fonts/silkscreen_normal_macroman/slkscr-webfont.woff') format('woff');
+  font-family: "Silkscreen";
+  src: url("Silkscreen-fontfacekit/web fonts/silkscreen_normal_macroman/slkscr-webfont.woff")
+    format("woff");
 }
 
-*
-{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -21,11 +21,35 @@ body {
 }
 
 h1 {
-  font-family: 'Silkscreen', sans-serif;
+  font-family: "Silkscreen", sans-serif;
   font-size: 4em;
   text-align: center;
   color: white;
   margin-top: 15px;
+}
+
+/*Game Window*/
+#gameWindow {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #dcdcdc;
+  margin-left: auto;
+  margin-right: auto;
+  border: 4px outset #bebebe;
+}
+
+/*Header*/
+#header {
+  height: 70px;
+  width: 94%;
+  border: 4px inset #bebebe;
+  margin: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buttonContainer {
@@ -49,6 +73,11 @@ h1 {
   border-bottom: 1px dashed black;
 }
 
+.dropBtn {
+  color: purple;
+  text-decoration: underline;
+}
+
 .dropdown:hover .dropdownContent {
   display: block;
 }
@@ -69,49 +98,21 @@ button {
   background-color: lightgray;
 }
 
-/*Game Window*/
-#gameWindow
-{
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #DCDCDC;
-  margin-left: auto;
-  margin-right: auto;
-  border: 4px outset #BEBEBE;
-}
-
-/*Header*/
-#header
-{
-  height: 70px;
-  width: 94%;
-  border: 4px inset #BEBEBE;
-  margin: 20px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 /*Grid Board*/
-#board
-{
+#board {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 20px;
-  border: 4px inset #BEBEBE
+  border: 4px inset #bebebe;
 }
 
-.cell
-{
+.cell {
   width: 35px;
   height: 35px;
   font-size: 1.4em;
   font-weight: 900;
-  border: 4px outset #BEBEBE;
+  border: 4px outset #bebebe;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,7 +136,7 @@ button {
   height: 50px;
   background-color: black;
   color: red;
-  font-family: 'Cursed Timer ULiL', sans-serif;
+  font-family: "Cursed Timer ULiL", sans-serif;
   font-size: 3em;
   display: flex;
   align-items: center;
@@ -146,8 +147,7 @@ button {
   -webkit-touch-callout: none;
 }
 
-#timer
-{
+#timer {
   width: 95px;
 }
 
@@ -157,7 +157,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 3px outset #BEBEBE;
+  border: 3px outset #bebebe;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }

@@ -128,6 +128,7 @@ const revealOtherMines = function()//happens when you accidently click a mine
   }
 
   document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+  document.querySelectorAll(".flagSprite").forEach(a=>a.style.display = "none");
 
   shouldTimerStop = true;//stop the timer from counting up
 
@@ -404,7 +405,7 @@ const clicked = function(cellNumber)//cell a was clicked!
     }
 
     document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
-
+    document.querySelectorAll(".flagSprite").forEach(a=>a.style.display = "none");
 
     //Make all cells unclickable
     checkedCells = [];

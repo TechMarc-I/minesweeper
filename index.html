@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='UTF-8'/>
+    <meta charset="UTF-8" />
     <title>Minesweeper</title>
-    <link rel='stylesheet' href='styles.css'>
+    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
@@ -12,46 +12,40 @@
     <!--Game Container-->
     <div id="gameWindow">
       <!--Buttons Container-->
-      <div class='buttonContainer'>
+      <div class="buttonContainer">
         <!--Difficulty-->
-        <div class='dropdown'>
-          <button class='dropBtn'>Difficulty</button>
-          <div class='dropdownContent'>
-            <button id="small" class='dropItem'>Easy</button>
-            <button id="medium" class='dropItem'>Normal</button>
-            <button id="large" class='dropItem'>Hard</button>
+        <div class="dropdown">
+          <button class="dropBtn">Difficulty</button>
+          <div class="dropdownContent">
+            <button id="small" class="dropItem">Easy</button>
+            <button id="medium" class="dropItem">Normal</button>
+            <button id="large" class="dropItem">Hard</button>
           </div>
         </div>
         <!--How To Play-->
-        <div class='dropdown'>
-          <button class='dropBtn'>How To Play</button>
-          <div class='dropdownContent'>
+        <div class="dropdown">
+          <button class="dropBtn">How To Play</button>
+          <div class="dropdownContent">
             <p></p>
           </div>
         </div>
-        
       </div>
-      
+
       <!--Header Information Container-->
       <div id="header">
         <!--Flag Counter-->
-        <div class='headerItem' id='flagCounter'>
+        <div class="headerItem" id="flagCounter"></div>
+        <div class="smiley" id="smileyface">
+          <img id="face" />
         </div>
-        <div class='smiley' id='smileyface'>
-          <img id='face' />
-        </div>
-        <div class='headerItem' id='timer'>000
-        </div>
+        <div class="headerItem" id="timer">000</div>
       </div>
 
       <!--Game Grid Container-->
-      <div id="board">
-      </div>
+      <div id="board"></div>
     </div>
 
-    <script src='main.js'></script>
+    <script src="main.js"></script>
     <script src="long-press-event-master/dist/long-press-event.min.js"></script>
-
   </body>
-
 </html>
