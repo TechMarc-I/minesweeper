@@ -96,6 +96,8 @@ button {
   border: none;
   border-right: 1px solid black;
   background-color: lightgray;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 /*Grid Board*/
