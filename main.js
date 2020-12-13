@@ -103,7 +103,8 @@ const generateMines = function() {
 //Update Flag Counter
 const flagCount = function() {
   let flagContainer = document.querySelector('#flagCounter')
-  flagContainer.textContent = flags;
+  let flagString = flags.toString();
+  flagContainer.textContent = flagString.padStart(3, '0');
 }
 
 //checked in clicked function

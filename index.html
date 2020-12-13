@@ -7,12 +7,31 @@
   </head>
 
   <body>
+    <h1>MINESWEEPER</h1>
 
     <!--Game Container-->
     <div id="gameWindow">
-      <button id="small">normal</button>
-      <button id="medium">very hard</button>
-      <button id="large">ultra hard</button>
+      <!--Buttons Container-->
+      <div class='buttonContainer'>
+        <!--Difficulty-->
+        <div class='dropdown'>
+          <button class='dropBtn'>Difficulty</button>
+          <div class='dropdownContent'>
+            <button id="small" class='dropItem'>Easy</button>
+            <button id="medium" class='dropItem'>Normal</button>
+            <button id="large" class='dropItem'>Hard</button>
+          </div>
+        </div>
+        <!--How To Play-->
+        <div class='dropdown'>
+          <button class='dropBtn'>How To Play</button>
+          <div class='dropdownContent'>
+            <p></p>
+          </div>
+        </div>
+        
+      </div>
+      
       <!--Header Information Container-->
       <div id="header">
         <!--Flag Counter-->

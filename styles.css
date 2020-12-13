@@ -3,6 +3,11 @@
   src: url('cursed-timer-ulil-font/CursedTimerUlil-Aznm.ttf');
 }
 
+@font-face {
+  font-family: 'Silkscreen';
+  src: url('Silkscreen-fontfacekit/web fonts/silkscreen_normal_macroman/slkscr-webfont.woff') format('woff');
+}
+
 *
 {
   margin: 0;
@@ -10,14 +15,68 @@
   box-sizing: border-box;
 }
 
+body {
+  height: 100vh;
+  background-image: linear-gradient(#2c3e50, #bdc3c7);
+}
+
+h1 {
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 4em;
+  text-align: center;
+  color: white;
+  margin-top: 15px;
+}
+
+.buttonContainer {
+  background-color: lightgray;
+  display: flex;
+  align-self: flex-start;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+}
+
+.dropItem {
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.dropdown .dropItem:hover {
+  background-color: whitesmoke;
+}
+
+button {
+  margin-left: 8px;
+  width: 95px;
+  font-weight: normal;
+  font-size: 1em;
+  text-align: left;
+  border-radius: 0%;
+  border: none;
+  border-right: 1px solid black;
+  background-color: lightgray;
+}
+
 /*Game Window*/
 #gameWindow
 {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #DCDCDC;
-
   margin-left: auto;
   margin-right: auto;
   border: 4px outset #BEBEBE;
@@ -27,12 +86,12 @@
 #header
 {
   height: 70px;
-  width: 360px;
+  width: 94%;
   border: 4px inset #BEBEBE;
-  margin-bottom: 20px;
+  margin: 20px;
   margin-top: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -42,7 +101,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
   margin-bottom: 20px;
   border: 4px inset #BEBEBE
 }
@@ -81,7 +139,9 @@
   font-size: 3em;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+  margin-right: 8px;
+  margin-left: 8px;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
