@@ -48,6 +48,9 @@ const revealMine = function(a)
     {
       document.getElementById(bombIndex[0]).style.backgroundColor = 'red';//turns all mines red
     }
+    else {
+      document.getElementById(bombIndex[0]).style.backgroundColor = 'green';//turns all mines red
+    }
 
     bombIndex.shift();
   }
@@ -423,7 +426,7 @@ const clicked = function(cellNumber)//cell a was clicked!
   {
     for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
     {
-      document.getElementById(bombIndex[i]).style.backgroundColor = 'blue';//turns all mines blue
+      document.getElementById(bombIndex[i]).style.backgroundColor = 'green';//turns all mines green
     }
 
     document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
