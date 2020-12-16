@@ -7,6 +7,8 @@ let time = 0;
 let shouldTimerStop = false;
 let cellWidth = 36;
 let maxMines = 10;
+let interval = null;
+
 
 //Variable for starting number of mines
 let mines = 10;
@@ -37,6 +39,24 @@ const hasAFlag = function(cellId)
   }
   return false;
 }
+
+const revealMine = function(a)
+{
+  if (bombIndex.length > 0)
+  {
+    if (!hasAFlag(bombIndex[0]))
+    {
+      document.getElementById(bombIndex[0]).style.backgroundColor = 'red';//turns all mines red
+    }
+
+    bombIndex.shift();
+  }
+  else
+    {
+      document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+    }
+}
+
 
 const checkWin = function(a)
 {
@@ -122,12 +142,14 @@ const isAMine = function(a)
 
 const revealOtherMines = function()//happens when you accidently click a mine
 {
-  for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
-  {
-    document.getElementById(bombIndex[i]).style.backgroundColor = 'red';//turns all mines red
-  }
+  interval = setInterval(revealMine,100);
 
-  document.querySelectorAll(".bombSprite").forEach(a=>a.style.display = "inline");
+  //for (i = 0; i < bombIndex.length; i++)//iterates through bomb bombIndex
+  //{
+    //setTimeout(revealMine,1000,bombIndex[i]);
+  //}
+
+
   document.querySelectorAll(".flagSprite").forEach(a=>a.style.display = "none");
 
   shouldTimerStop = true;//stop the timer from counting up
@@ -423,6 +445,7 @@ const clicked = function(cellNumber)//cell a was clicked!
 
 //Function to Create Grid
 const generateGrid = function() {
+  clearInterval(interval);
   let cellId = 0;
   cellCount = numRows*numColumns;
   while (cellId < cellCount)
