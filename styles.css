@@ -75,7 +75,9 @@ h1 {
 
 .dropBtn {
   color: purple;
-  text-decoration: underline;
+
+  border-width: medium;
+  border-style: solid;
 }
 
 .dropdown:hover .dropdownContent {
