@@ -1,0 +1,23 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "A recreation of the popular game Minesweeper",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechMarc-I/minesweeper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechMarc-I/minesweeper/issues"
+  },
+  "homepage": "https://github.com/TechMarc-I/minesweeper#readme",
+  "dependencies": {
+    "long-press-event": "^2.4.2",
+    "parcel-bundler": "^1.12.4"
+  }
+}
